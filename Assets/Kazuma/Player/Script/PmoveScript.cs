@@ -8,6 +8,7 @@ public class PmoveScript : MonoBehaviour
     public float moveDistance = 1.0f; // 1マス分の移動距離
     public float moveDuration = 0.2f; // 移動にかかる時間
     private Rigidbody2D rb;
+    private bool isMoving = false; // 現在移動中かどうかを示すフラグ
 
     // Start is called before the first frame update
     void Start()
@@ -18,24 +19,25 @@ public class PmoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
         {
+        if (isMoving) return; // 移動中なら新しい入力を受け付けない
+
         Vector3 move = Vector3.zero;
 
         // 矢印キーの入力を確認して移動量を設定
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        switch (Input.inputString)
             {
-            move = Vector3.up * moveDistance;
-            }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-            move = Vector3.down * moveDistance;
-            }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-            move = Vector3.left * moveDistance;
-            }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-            move = Vector3.right * moveDistance;
+            case "w": // UpArrow key
+                move = Vector3.up * moveDistance;
+                break;
+            case "s": // DownArrow key
+                move = Vector3.down * moveDistance;
+                break;
+            case "a": // LeftArrow key
+                move = Vector3.left * moveDistance;
+                break;
+            case "d": // RightArrow key
+                move = Vector3.right * moveDistance;
+                break;
             }
 
         // 移動が設定されていたら
@@ -51,6 +53,8 @@ public class PmoveScript : MonoBehaviour
                 }
             else
                 {
+                isMoving = true; // 移動フラグを立てる
+
                 // DoTweenを使って移動する
                 transform.DOMove(targetPosition, moveDuration).SetEase(Ease.Linear).OnComplete(() =>
                 {
@@ -66,6 +70,8 @@ public class PmoveScript : MonoBehaviour
                         {
                         Debug.Log("No collision at target position");
                         }
+
+                    isMoving = false; // 移動が完了したらフラグをリセット
                 });
                 }
             }
