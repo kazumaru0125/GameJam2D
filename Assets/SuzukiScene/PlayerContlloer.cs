@@ -13,76 +13,80 @@ public class PlayerContlloer : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
-    private Vector2 targetPosition;
-    private bool isMoving = false;
-    private bool canMove = true; // 一度の移動を許可するフラグ
+    private bool isMoving = false; // 移動中かどうかのフラグ
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        targetPosition = rb.position;
     }
 
     void Update()
     {
-        // 入力を取得
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-
-        // 移動方向の決定
-        if (!isMoving && canMove && (moveX != 0 || moveY != 0))
+        // 入力を受け付ける条件を設定する
+        if (!isMoving)
         {
-            // 斜め移動を無効にするための処理
-            if (Mathf.Abs(moveX) > Mathf.Abs(moveY))
-            {
-                moveY = 0;
-            }
-            else
-            {
-                moveX = 0;
-            }
+            // 入力を取得
+            float moveX = 0f;
+            float moveY = 0f;
 
-            // 目標位置の計算
-            targetPosition = rb.position + new Vector2(moveX * gridSize, moveY * gridSize);
-            isMoving = true;
-            canMove = false; // 移動フラグをfalseに設定
-
-            // スプライトの切り替え
-            if (moveX > 0)
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
+                moveX = 1f;
                 spriteRenderer.sprite = rightSprite;
             }
-            else if (moveX < 0)
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                moveX = -1f;
                 spriteRenderer.sprite = leftSprite;
             }
-            else if (moveY > 0)
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                moveY = 1f;
                 spriteRenderer.sprite = upSprite;
             }
-            else if (moveY < 0)
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
             {
+                moveY = -1f;
                 spriteRenderer.sprite = downSprite;
+            }
+
+            // 移動方向の決定
+            if (moveX != 0 || moveY != 0)
+            {
+                // 目標位置の計算
+                Vector2 movementDirection = new Vector2(moveX, moveY);
+                Vector2 targetPosition = rb.position + movementDirection * gridSize;
+
+                // 移動の開始
+                MovePlayer(movementDirection);
             }
         }
     }
 
-    void FixedUpdate()
+    // 移動メソッド
+    void MovePlayer(Vector2 direction)
     {
-        // 移動処理
-        if (isMoving)
-        {
-            Vector2 currentPosition = rb.position;
-            Vector2 newPosition = Vector2.MoveTowards(currentPosition, targetPosition, moveSpeed * Time.fixedDeltaTime);
-            rb.MovePosition(newPosition);
+        isMoving = true;
+        Vector2 start = rb.position;
+        Vector2 end = start + direction * gridSize;
 
-            // 移動完了
-            if ((Vector2)rb.position == targetPosition)
-            {
-                isMoving = false;
-                canMove = true; // 移動フラグをtrueに戻す
-            }
+        StartCoroutine(MoveCoroutine(start, end));
+    }
+
+    // 移動コルーチン
+    IEnumerator MoveCoroutine(Vector2 start, Vector2 end)
+    {
+        float sqrRemainingDistance = (rb.position - end).sqrMagnitude;
+
+        while (sqrRemainingDistance > float.Epsilon)
+        {
+            Vector2 newPosition = Vector2.MoveTowards(rb.position, end, moveSpeed * Time.deltaTime);
+            rb.MovePosition(newPosition);
+            sqrRemainingDistance = (rb.position - end).sqrMagnitude;
+            yield return null;
         }
+
+        isMoving = false;
     }
 }
