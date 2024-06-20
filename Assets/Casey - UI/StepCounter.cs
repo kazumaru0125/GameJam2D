@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 //by Casey
@@ -50,7 +51,7 @@ public class StepCounter : MonoBehaviour
         {
             //TODO: a game-over should occur if this conditional is reached (player has run out of steps)
             //TODO: この条件に達した場合、ゲームオーバーが発生する必要があります (プレイヤーのステップがなくなった場合)
-
+            SceneManager.LoadScene("testEnding");
         }
     }
 }

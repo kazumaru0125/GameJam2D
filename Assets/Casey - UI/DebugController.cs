@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 //by Casey
@@ -13,6 +14,10 @@ public class DebugController : MonoBehaviour
 {
     [SerializeField] private StepCounter stepCounter;
 
+    private void Start()
+    {
+        //Debug.Log("Name: " + SceneManager.GetActiveScene().name);
+    }
     private void Update()
     {
         if(Input.anyKeyDown)
