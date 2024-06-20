@@ -7,6 +7,11 @@ public class PmoveScript : MonoBehaviour
     {
     public float moveDistance = 1.0f; // 1マス分の移動距離
     public float moveDuration = 0.2f; // 移動にかかる時間
+    public Sprite rightSprite;   // 右向きのスプライト
+    public Sprite leftSprite;    // 左向きのスプライト
+    public Sprite upSprite;      // 上向きのスプライト
+    public Sprite downSprite;    // 下向きのスプライト
+
     private Rigidbody2D rb;
     private bool isMoving = false; // 現在移動中かどうかを示すフラグ
 
@@ -28,15 +33,19 @@ public class PmoveScript : MonoBehaviour
             {
             case "w": // UpArrow key
                 move = Vector3.up * moveDistance;
+                GetComponent<SpriteRenderer>().sprite = upSprite;
                 break;
             case "s": // DownArrow key
                 move = Vector3.down * moveDistance;
+                GetComponent<SpriteRenderer>().sprite = downSprite;
                 break;
             case "a": // LeftArrow key
                 move = Vector3.left * moveDistance;
+                GetComponent<SpriteRenderer>().sprite = leftSprite;
                 break;
             case "d": // RightArrow key
                 move = Vector3.right * moveDistance;
+                GetComponent<SpriteRenderer>().sprite = rightSprite;
                 break;
             }
 
@@ -77,3 +86,4 @@ public class PmoveScript : MonoBehaviour
             }
         }
     }
+

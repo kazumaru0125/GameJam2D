@@ -270,7 +270,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 1
-  moveDuration: 0.2
+  moveDuration: 1
+  rightSprite: {fileID: 21300000, guid: 61092d1318f892a439eb1c95105b7e2d, type: 3}
+  leftSprite: {fileID: 21300000, guid: a35b91127f6f3154c94df67d482c4c0a, type: 3}
+  upSprite: {fileID: 21300000, guid: 6ea8c04eca8cf7b4d9e65d2d7a6aaaae, type: 3}
+  downSprite: {fileID: 21300000, guid: 874f83dceecbaec478a7cbae20625471, type: 3}
 --- !u!1 &137106033
 GameObject:
   m_ObjectHideFlags: 0
