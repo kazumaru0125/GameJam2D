@@ -74,6 +74,8 @@ public class PlayerContlloer : MonoBehaviour
         StartCoroutine(MoveCoroutine(start, end));
     }
 
+
+
     // ˆÚ“®ƒRƒ‹[ƒ`ƒ“
     IEnumerator MoveCoroutine(Vector2 start, Vector2 end)
     {
