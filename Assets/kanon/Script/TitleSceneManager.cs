@@ -16,7 +16,7 @@ public class TitleSceneManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Initiate.Fade("PlayScene", Color.black, 1.0f);
+            //Initiate.Fade("PlayScene", Color.black, 1.0f);
             //SceneManager.LoadScene("PlayScene");
         }
     }
