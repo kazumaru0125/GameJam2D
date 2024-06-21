@@ -85,5 +85,14 @@ public class PmoveScript : MonoBehaviour
                 }
             }
         }
+
+    void OnTriggerEnter2D(Collider2D other)
+        {
+        // If the collided object has the tag "Player"
+        if (other.gameObject.tag == "train")
+            {
+            Destroy(gameObject);
+            }
+        }
     }
 
