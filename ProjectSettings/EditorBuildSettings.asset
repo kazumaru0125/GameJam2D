@@ -5,16 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Casey - UI/UI test scene.unity
     guid: c8907019c51777f48b41f21edf62a13a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Casey - UI/testEnding.unity
     guid: 64daf47d0c324a74887c0822e4267972
-  - enabled: 1
+  - enabled: 0
     path: Assets/Kazuma/TestScene.unity
     guid: c3d9385b00d473f4199654cea731f433
+  - enabled: 1
+    path: Assets/kanon/Scene/ResultScene.unity
+    guid: 78f28e08215269147a1ac5c8d7269cc4
+  - enabled: 1
+    path: Assets/kanon/Scene/TitleScene.unity
+    guid: 1479746676cd82f489f1707fa2826aa6
   m_configObjects: {}
