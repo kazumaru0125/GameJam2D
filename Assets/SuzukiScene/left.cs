@@ -9,6 +9,8 @@ public class left : MonoBehaviour
     public float scrollSpeed = 3.0f; // スクロール速度
     public float fixedYPosition = 0f; // 固定するY座標
     public float minDistanceBetweenObjects = 1.0f; // オブジェクト間の最小距離
+    public float leftBoundaryOffset = 2.0f; // 左端のオフセット
+    public float rightBoundaryOffset = 2.0f; // 右端のオフセット
 
     private List<GameObject> objects = new List<GameObject>(); // 生成したオブジェクトを格納するリスト
     private float screenWidth; // カメラの画面幅
@@ -20,7 +22,7 @@ public class left : MonoBehaviour
         mainCamera = Camera.main;
         CalculateScreenWidth();
 
-        // オブジェクトを左端から生成してリストに追加する
+        // オブジェクトを生成してリストに追加する
         for (int i = 0; i < numberOfObjects; i++)
         {
             Vector3 spawnPosition = GenerateValidSpawnPosition();
@@ -36,8 +38,8 @@ public class left : MonoBehaviour
         {
             objects[i].transform.Translate(Vector3.right * scrollSpeed * Time.deltaTime);
 
-            // オブジェクトが画面の右端から出たら、左端から再度生成する
-            if (objects[i].transform.position.x > mainCamera.transform.position.x + screenWidth / 2 + objects[i].GetComponent<Renderer>().bounds.size.x / 2)
+            // オブジェクトが画面外に出たら、画面の左端に移動させる
+            if (objects[i].transform.position.x > mainCamera.transform.position.x + screenWidth / 2 + rightBoundaryOffset)
             {
                 RepositionObject(objects[i]);
             }
@@ -47,7 +49,7 @@ public class left : MonoBehaviour
     void RepositionObject(GameObject objToReposition)
     {
         // 画面の左端に再配置する
-        float newX = mainCamera.transform.position.x - screenWidth / 2 - objToReposition.GetComponent<Renderer>().bounds.size.x / 2;
+        float newX = mainCamera.transform.position.x - screenWidth / 2 - leftBoundaryOffset;
         objToReposition.transform.position = new Vector3(newX, fixedYPosition, objToReposition.transform.position.z);
     }
 

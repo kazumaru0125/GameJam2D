@@ -8,6 +8,8 @@ public class EnemyContlloer : MonoBehaviour
     public float scrollSpeed = 3.0f; // スクロール速度
     public float fixedYPosition = 0f; // 固定するY座標
     public float minDistanceBetweenObjects = 1.0f; // オブジェクト間の最小距離
+    public float leftBoundaryOffset = 2.0f; // 左端のオフセット
+    public float rightBoundaryOffset = 2.0f; // 右端のオフセット
 
     private List<GameObject> objects = new List<GameObject>(); // 生成したオブジェクトを格納するリスト
     private float screenWidth; // カメラの画面幅
@@ -36,7 +38,7 @@ public class EnemyContlloer : MonoBehaviour
             objects[i].transform.Translate(Vector3.left * scrollSpeed * Time.deltaTime);
 
             // オブジェクトが画面外に出たら、画面の反対側に移動させる
-            if (objects[i].transform.position.x < mainCamera.transform.position.x - screenWidth / 2 - objects[i].GetComponent<Renderer>().bounds.size.x / 2)
+            if (objects[i].transform.position.x < mainCamera.transform.position.x - screenWidth / 2 - leftBoundaryOffset)
             {
                 RepositionObject(objects[i]);
             }
@@ -46,7 +48,7 @@ public class EnemyContlloer : MonoBehaviour
     void RepositionObject(GameObject objToReposition)
     {
         // 画面の右端に再配置する
-        float newX = mainCamera.transform.position.x + screenWidth / 2 + objToReposition.GetComponent<Renderer>().bounds.size.x / 2;
+        float newX = mainCamera.transform.position.x + screenWidth / 2 + rightBoundaryOffset;
         objToReposition.transform.position = new Vector3(newX, fixedYPosition, objToReposition.transform.position.z);
     }
 
